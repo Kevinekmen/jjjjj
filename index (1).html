@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>[ESC] Hacker Escape Rooms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: #0b1115;
+      background: #ffffff;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+    .site-header { position: sticky; top: 0; z-index: 50; background: #0b2533; color: #ffffff; }
+    .nav { height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .logo { width: 42px; height: 32px; border-radius: 8px; background: #ffffff; color: #0b2533; display: grid; place-items: center; font-weight: 800; text-transform: lowercase; }
+
+    .menu { display: flex; gap: 24px; align-items: center; }
+    .menu a { opacity: 0.9; }
+    .menu a:hover { opacity: 1; }
+
+    .hamburger { display: none; background: transparent; border: 0; color: #ffffff; width: 44px; height: 44px; padding: 0; }
+
+    #mobileMenu { position: fixed; left: 0; top: 0; right: 0; bottom: 0; background: rgba(11,37,51,0.96); display: none; padding: 24px; }
+    .mobile-inner { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+    #mobileMenu a { color: #e6f0f6; font-size: 20px; font-weight: 600; padding: 12px 16px; border-radius: 12px; }
+    #mobileMenu a:hover { background: #103346; }
+
+    .hero { background: #0b2533; color: #ffffff; padding: 0 0 24px; }
+    .hero-media { border-radius: 16px; overflow: hidden; position: relative; }
+    .hero-media img { width: 100%; height: 400px; object-fit: cover; display: block; filter: saturate(90%); }
+    .pillbar { position: absolute; left: 16px; bottom: 16px; display: flex; gap: 10px; }
+    .pill { padding: 10px 14px; border-radius: 999px; font-weight: 700; font-size: 14px; }
+    .pill.red { background: #e31d1c; color: #ffffff; }
+    .pill.blue { background: #dff3fa; color: #0a3342; border: 2px solid #bfe7f4; }
+
+    .quotes { padding: 28px 0; }
+    .quotes-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .quote { display: flex; gap: 12px; }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; flex: none; }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .quote small { color: #6b7b88; display: block; margin-top: 6px; }
+
+    .section-title { text-align: center; margin: 8px 0 16px; font-weight: 800; }
+    .cards { padding: 6px 0 28px; }
+    .cardgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .card { background: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e7eef3; }
+    .card, .panel { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+    .card img { width: 100%; height: 170px; object-fit: cover; display: block; }
+    .card-body { padding: 14px; }
+    .card h3 { font-size: 16px; margin: 0 0 10px; }
+    .meta { font-size: 12px; color: #6b7b88; display: flex; gap: 12px; margin-bottom: 10px; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; font-weight: 600; border-radius: 10px; border: 0; cursor: pointer; }
+    .btn-primary { background: #e31d1c; color: #ffffff; }
+    .btn-primary:hover { background: #c31615; }
+    .btn-accent { background: #4bb1d0; color: #07222d; }
+    .btn-accent:hover { background: #2a8fae; color: #ffffff; }
+    .btn-outline { background: transparent; border: 1.5px solid #d3dbe1; color: #143948; }
+
+    .cta-band { background: #f3f6f8; padding: 24px 0; }
+    .cta-band .pills { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    .story { background: #0b2533; color: #e6f6fb; padding: 40px 0; }
+    .story .text { max-width: 680px; margin: 0 auto; text-align: center; }
+    .story .text p { color: #c8d4db; }
+
+    .split { padding: 28px 0; }
+    .splitgrid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; align-items: stretch; }
+    .panel { background: #ffffff; border: 1px solid #e7eef3; border-radius: 16px; overflow: hidden; }
+    .panel img { width: 100%; height: 100%; min-height: 280px; object-fit: cover; display: block; }
+    .panel.body { padding: 20px; }
+    .panel.body h3 { margin: 0 0 10px; }
+    .panel.body p { color: #6b7b88; }
+    .panel.body .btn { margin-top: 12px; }
+
+    .site-footer { background: #071a24; color: #c7d1d9; padding: 32px 0 16px; }
+    .footgrid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 18px; }
+    .foot h4 { margin: 0 0 10px; font-size: 14px; color: #e6f0f6; text-transform: uppercase; letter-spacing: .08em; }
+    .foot p, .foot a { color: #9fb0bb; font-size: 14px; line-height: 1.6; }
+    .credits { border-top: 1px solid #203645; margin-top: 20px; padding-top: 12px; text-align: center; color: #7f95a3; font-size: 14px; }
+
+    @media (max-width: 992px) {
+      .quotes-list { grid-template-columns: 1fr 1fr; }
+      .cardgrid { grid-template-columns: 1fr 1fr; }
+      .splitgrid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .menu { display: none; }
+      .hamburger { display: inline-flex; align-items: center; justify-content: center; }
+      .hero-media img { height: 320px; }
+      .quotes-list { grid-template-columns: 1fr; }
+      .cardgrid { grid-template-columns: 1fr; }
+      .pillbar { left: 12px; bottom: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#">
+        <span class="logo">esc</span>
+        <span>Hacker Escape Rooms</span>
+      </a>
+
+      <nav class="menu" aria-label="Primary">
+        <a href="#">Play online</a>
+        <a href="#">Play on-site</a>
+        <a href="#">The story</a>
+        <a href="#">Contact us</a>
+      </nav>
+
+      <button id="hamburger" class="hamburger" aria-label="Open menu" aria-expanded="false">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="mobileMenu" aria-hidden="true">
+      <div class="mobile-inner">
+        <a href="#">Play online</a>
+        <a href="#">Play on-site</a>
+        <a href="#">The story</a>
+        <a href="#">Contact us</a>
+        <button id="closeMenu" class="btn btn-outline" style="margin-top:20px;">Close</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-media">
+        <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1600&auto=format&fit=crop" alt="Hacker at multiple screens"/>
+        <div class="pillbar">
+          <span class="pill red">Online challenges</span>
+          <span class="pill blue">On-site challenges</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quotes">
+    <div class="container">
+      <div class="quotes-list">
+        <article class="quote">
+          <span class="avatar"><img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=256&auto=format&fit=crop" alt="Avatar"/></span>
+          <div>
+            <p>“Amazing experience! We had so much fun solving the puzzles together.”</p>
+            <small>John Doe, visited in September 2025</small>
+          </div>
+        </article>
+        <article class="quote">
+          <span class="avatar"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=256&auto=format&fit=crop" alt="Avatar"/></span>
+          <div>
+            <p>“Great rooms and friendly staff. Perfect weekend activity!”</p>
+            <small>Jane Doe, visited in September 2025</small>
+          </div>
+        </article>
+        <article class="quote">
+          <span class="avatar"><img src="https://images.unsplash.com/photo-1541534401786-2077eed87a72?q=80&w=256&auto=format&fit=crop" alt="Avatar"/></span>
+          <div>
+            <p>“Challenging but super rewarding. We’ll come back for more.”</p>
+            <small>Alex Doe, visited in September 2025</small>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cards">
+    <div class="container">
+      <h2 class="section-title">Popular challenges right now</h2>
+      <div class="cardgrid">
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1504384764586-bb4cdc1707b0?q=80&w=1200&auto=format&fit=crop" alt="Room"/>
+          <div class="card-body">
+            <h3>Warehouse Heist (on-site)</h3>
+            <div class="meta"><span>⭐️⭐️⭐️⭐️⭐️ 4.8</span><span>60 min</span><span>2–6 players</span></div>
+            <p class="muted">Break in, grab the loot, and escape before the guards return.</p>
+          </div>
+          <div class="cta"><button class="btn btn-primary">Book on-site</button></div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Room"/>
+          <div class="card-body">
+            <h3>Server Breach (on-site)</h3>
+            <div class="meta"><span>⭐️⭐️⭐️⭐️ 4.5</span><span>45 min</span><span>3–8 players</span></div>
+            <p class="muted">Hack the mainframe, decode the keys, and shut it down in time.</p>
+          </div>
+          <div class="cta"><button class="btn btn-primary">Book on-site</button></div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1200&auto=format&fit=crop" alt="Room"/>
+          <div class="card-body">
+            <h3>Quantum Lab (on-site)</h3>
+            <div class="meta"><span>⭐️⭐️⭐️⭐️⭐️ 4.9</span><span>60 min</span><span>2–5 players</span></div>
+            <p class="muted">Stabilize the reactor by solving experimental puzzles.</p>
+          </div>
+          <div class="cta"><button class="btn btn-primary">Book on-site</button></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <div class="pills">
+        <button class="btn btn-primary">Online challenges</button>
+        <button class="btn btn-accent">On-site challenges</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="story">
+    <div class="container">
+      <div class="text">
+        <h2>The full story</h2>
+        <p>At [ESC], we build escape room adventures that test your logic, teamwork, and creativity. Play online from home or visit our venue for immersive, story-driven experiences.</p>
+        <p><a class="btn btn-outline" href="#">Read the full story</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="split">
+    <div class="container">
+      <div class="splitgrid">
+        <article class="panel"><img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1400&auto=format&fit=crop" alt="Office team"/></article>
+        <article class="panel body">
+          <h3>Play with friends or power up your team at work</h3>
+          <p>Perfect for birthdays, after-work fun, or team-building sessions. Communicate well, think fast, and solve together.</p>
+          <button class="btn btn-primary">Book on-site today</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="split">
+    <div class="container">
+      <div class="splitgrid" style="grid-template-columns:1fr 1.1fr">
+        <article class="panel body">
+          <h3>Play online or try any of our 25 escape rooms</h3>
+          <p>Short, intense challenges or longer story arcs—choose the format that suits your group best.</p>
+          <button class="btn btn-primary">See all challenges</button>
+        </article>
+        <article class="panel"><img src="https://images.unsplash.com/photo-1515165562835-c3b8c1c9c8d0?q=80&w=1400&auto=format&fit=crop" alt="Woman at computer"/></article>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footgrid">
+        <div class="foot">
+          <h3 style="margin:0 0 10px">[esc] Hacker Escape Rooms</h3>
+          <p>Online and on-site escape room experiences for friends, families, and teams.</p>
+        </div>
+        <div class="foot">
+          <h4>Site map</h4>
+          <p><a href="#">The story</a><br/>
+             <a href="#">Legal</a><br/>
+             <a href="#">Career</a></p>
+        </div>
+        <div class="foot">
+          <h4>Play online</h4>
+          <p><a href="#">Play online</a><br/>
+             <a href="#">Play on-site</a></p>
+        </div>
+        <div class="foot">
+          <h4>Follow us on</h4>
+          <p><a href="#">Facebook</a><br/>
+             <a href="#">Instagram</a><br/>
+             <a href="#">Twitter</a></p>
+        </div>
+      </div>
+      <div class="credits">© 2025 [esc] Hacker Escape Rooms</div>
+    </div>
+  </footer>
+
+  <script>
+    var btn = document.getElementById('hamburger');
+    var menu = document.getElementById('mobileMenu');
+    var closeBtn = document.getElementById('closeMenu');
+
+    function openMenu() {
+      menu.style.display = 'block';
+      btn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenuNow() {
+      menu.style.display = 'none';
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    btn.addEventListener('click', function(){
+      if (menu.style.display === 'block') { closeMenuNow(); } else { openMenu(); }
+    });
+    closeBtn.addEventListener('click', closeMenuNow);
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && menu.style.display === 'block') closeMenuNow();
+    });
+    menu.addEventListener('click', function(e){
+      if (e.target.tagName === 'A') closeMenuNow();
+    });
+  </script>
+</body>
+</html>
